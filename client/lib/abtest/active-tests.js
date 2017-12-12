@@ -117,4 +117,12 @@ export default {
 		},
 		defaultVariation: 'control',
 	},
+	brCreditCardProvider: {
+		datestamp: '20180115',
+		variations: {
+			paygate: 50,
+			ebanx: 50,
+		},
+		defaultVariation: 'paygate',
+	},
 };

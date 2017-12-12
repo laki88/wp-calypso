@@ -11,6 +11,7 @@ import isString from 'lodash/isString';
  */
 import config from 'config';
 import { PAYMENT_PROCESSOR_EBANX_COUNTRIES } from './constants';
+import { abtest } from 'lib/abtest';
 
 /**
  *
@@ -20,6 +21,7 @@ import { PAYMENT_PROCESSOR_EBANX_COUNTRIES } from './constants';
 export function isEbanx( countryCode = '' ) {
 	return (
 		! isUndefined( PAYMENT_PROCESSOR_EBANX_COUNTRIES[ countryCode ] ) &&
+		'ebanx' === abtest( 'brCreditCardProvider' ) &&
 		config.isEnabled( 'upgrades/ebanx' )
 	);
 }
