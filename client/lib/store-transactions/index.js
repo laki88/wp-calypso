@@ -303,7 +303,7 @@ function createEbanxToken( requestType, cardDetails, callback ) {
 }
 
 function createCardToken( requestType, cardDetails, callback ) {
-	if ( isEbanx( cardDetails.country ) ) {
+	if ( requestType === 'new_purchase' && isEbanx( cardDetails.country ) ) {
 		return createEbanxToken( requestType, cardDetails, callback );
 	}
 
