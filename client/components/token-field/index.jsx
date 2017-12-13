@@ -158,11 +158,20 @@ class TokenField extends PureComponent {
 	};
 
 	_renderInput = () => {
-		const { autoCapitalize, autoComplete, id, maxLength, value, placeholder } = this.props;
+		const {
+			autoCapitalize,
+			autoComplete,
+			autoCorrect,
+			id,
+			maxLength,
+			value,
+			placeholder,
+		} = this.props;
 
 		let props = {
 			autoCapitalize,
 			autoComplete,
+			autoCorrect,
 			disabled: this.props.disabled,
 			hasFocus: this.state.tokenInputHasFocus,
 			id,
@@ -170,6 +179,10 @@ class TokenField extends PureComponent {
 			onBlur: this._onBlur,
 			value: this.state.incompleteTokenValue,
 		};
+
+		if ( props.autoCorrect === 'off' ) {
+			props.spellCheck = 'false';
+		}
 
 		if ( value.length === 0 && placeholder ) {
 			props.placeholder = placeholder;
