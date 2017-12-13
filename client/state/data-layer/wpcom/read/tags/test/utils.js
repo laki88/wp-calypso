@@ -78,14 +78,14 @@ describe( 'wpcom-api: read/tags utils', () => {
 			expect( transformedResponse ).to.eql( normalizedSuccessfulSingleTagResponse );
 		} );
 
-		test( 'should not blow up when given wrong keys', () => {
-			const transformedResponse = fromApi( { noCorrectKeys: 'evil test' } );
-			expect( transformedResponse ).to.eql( [] );
+		test( 'should blow up when given wrong keys', () => {
+			const badResponse = { noCorrectKeys: 'evil test' };
+			expect( () => fromApi( badResponse ) ).toThrow();
 		} );
 
-		test( 'should not blow up when given bad values', () => {
-			const transformedResponse = fromApi( { tag: 'evil test' } );
-			expect( transformedResponse ).to.eql( [] );
+		test( 'should blow up when given bad values', () => {
+			const badResponse = fromApi( { tag: 'evil test' } );
+			expect( () => fromApi( badResponse ) ).toThrow();
 		} );
 	} );
 } );
