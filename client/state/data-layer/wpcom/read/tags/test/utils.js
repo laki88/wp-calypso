@@ -2,7 +2,6 @@
 /**
  * External dependencies
  */
-import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
 
 /**
@@ -70,12 +69,12 @@ describe( 'wpcom-api: read/tags utils', () => {
 	describe( '#fromApi', () => {
 		test( 'should properly normalize many tags', () => {
 			const transformedResponse = fromApi( successfulFollowedTagsResponse );
-			expect( transformedResponse ).to.eql( normalizedFollowedTagsResponse );
+			expect( transformedResponse ).toEqual( normalizedFollowedTagsResponse );
 		} );
 
 		test( 'should properly normalize a single tag', () => {
 			const transformedResponse = fromApi( successfulSingleTagResponse );
-			expect( transformedResponse ).to.eql( normalizedSuccessfulSingleTagResponse );
+			expect( transformedResponse ).toEqual( normalizedSuccessfulSingleTagResponse );
 		} );
 
 		test( 'should blow up when given wrong keys', () => {
