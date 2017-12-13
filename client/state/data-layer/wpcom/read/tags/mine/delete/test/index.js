@@ -31,11 +31,6 @@ const successfulUnfollowResponse = {
 	],
 };
 
-const unsuccessfulResponse = {
-	...successfulUnfollowResponse,
-	subscribed: true,
-};
-
 const slug = 'chicken';
 
 describe( 'unfollow tag request', () => {
