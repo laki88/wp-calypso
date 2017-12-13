@@ -16,19 +16,18 @@ import { isExternal } from 'lib/url';
 import { preload } from 'sections-preload';
 
 export default class extends React.Component {
-	static displayName = 'SidebarItem';
+	static displayName = 'SubSidebarItem';
 
 	static propTypes = {
 		label: PropTypes.string.isRequired,
 		className: PropTypes.string,
-		link: PropTypes.string,
+		link: PropTypes.string.isRequired,
 		onNavigate: PropTypes.func,
 		icon: PropTypes.string,
 		selected: PropTypes.bool,
 		preloadSectionName: PropTypes.string,
 		forceInternalLink: PropTypes.bool,
 		testTarget: PropTypes.string,
-		tipTarget: PropTypes.string,
 	};
 
 	_preloaded = false;
@@ -59,7 +58,7 @@ export default class extends React.Component {
 					onMouseEnter={ this.preload }
 				>
 					<Gridicon icon={ this.props.icon } size={ 24 } />
-					<span className="menu-link-text">{ this.props.label }</span>
+					<span className="sidebar__sub-sidebar-item-link-text">{ this.props.label }</span>
 					{ showAsExternal && <Gridicon icon="external" size={ 24 } /> }
 				</a>
 				{ this.props.children }

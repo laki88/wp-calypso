@@ -29,6 +29,8 @@ import SidebarHeading from 'layout/sidebar/heading';
 import SidebarItem from 'layout/sidebar/item';
 import SidebarMenu from 'layout/sidebar/menu';
 import SidebarRegion from 'layout/sidebar/region';
+import SubSidebar from 'layout/sidebar/sub-sidebar';
+import SubSidebarItem from 'layout/sidebar/sub-sidebar-item';
 import StatsSparkline from 'blocks/stats-sparkline';
 import JetpackLogo from 'components/jetpack-logo';
 import { isPlan, isFreeTrial, isPersonal, isPremium, isBusiness } from 'lib/products-values';
@@ -474,9 +476,14 @@ export class MySitesSidebar extends Component {
 		);
 	}
 
+	trackSettingsClick = () => {
+		analytics.tracks.recordEvent( 'calypso_sidebar_settings_click' );
+
+		this.onNavigate();
+	};
+
 	siteSettings() {
 		const { site, canUserManageOptions } = this.props;
-		const siteSettingsLink = '/settings/general' + this.props.siteSuffix;
 
 		if ( site && ! canUserManageOptions ) {
 			return null;
@@ -487,16 +494,50 @@ export class MySitesSidebar extends Component {
 		}
 
 		return (
-			<SidebarItem
-				label={ this.props.translate( 'Settings' ) }
-				className={ this.itemLinkClass( '/settings', 'settings' ) }
-				link={ siteSettingsLink }
-				onNavigate={ this.onNavigate }
-				icon="cog"
-				preloadSectionName="settings"
-				tipTarget="settings"
-			/>
+			<div>
+				<SidebarItem
+					label={ this.props.translate( 'Settings' ) }
+					className={ this.itemLinkClass( '/settings', 'settings' ) }
+					onNavigate={ this.trackSettingsClick }
+					icon="cog"
+					tipTarget="settings"
+				>
+					<Gridicon className="sidebar__chevron-right" icon="chevron-right" />
+				</SidebarItem>
+				<SubSidebar>
+					<SubSidebarItem
+						icon="cog"
+						link={ this.siteSettingsLink( 'general' ) }
+						label={ this.props.translate( 'General' ) }
+					/>
+					<SubSidebarItem
+						icon="cog"
+						link={ this.siteSettingsLink( 'writing' ) }
+						label={ this.props.translate( 'Writing' ) }
+					/>
+					<SubSidebarItem
+						icon="cog"
+						link={ this.siteSettingsLink( 'discussion' ) }
+						label={ this.props.translate( 'Discussion' ) }
+					/>
+					<SubSidebarItem
+						icon="cog"
+						link={ this.siteSettingsLink( 'traffic' ) }
+						label={ this.props.translate( 'Traffic' ) }
+					/>
+					<SubSidebarItem
+						icon="cog"
+						link={ this.siteSettingsLink( 'security' ) }
+						label={ this.props.translate( 'Security' ) }
+					/>
+				</SubSidebar>
+			</div>
 		);
+	}
+
+	siteSettingsLink( section ) {
+		const siteSettingsLink = '/settings/' + section + this.props.siteSuffix;
+		return siteSettingsLink;
 	}
 
 	wpAdmin() {
@@ -649,6 +690,7 @@ export class MySitesSidebar extends Component {
 	}
 
 	render() {
+		// add sidebar toggle here?
 		return (
 			<Sidebar>
 				<SidebarRegion>
