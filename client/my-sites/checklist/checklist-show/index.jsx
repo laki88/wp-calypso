@@ -42,11 +42,11 @@ class ChecklistShow extends PureComponent {
 				status,
 			} );
 
-			if ( url ) {
-				page( url );
-			}
 			if ( tour ) {
 				requestTour( tour );
+			}
+			if ( url ) {
+				page( url );
 			}
 		}
 	};
