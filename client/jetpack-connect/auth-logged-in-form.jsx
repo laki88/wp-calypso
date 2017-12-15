@@ -99,13 +99,13 @@ export class LoggedInForm extends Component {
 	componentWillMount() {
 		const { recordTracksEvent } = this.props;
 		const { autoAuthorize } = this.props.authorizationData;
-		const { alreadyAuthorized, newUserStartedConnection } = this.props.authQuery;
+		const { alreadyAuthorized, authApproved } = this.props.authQuery;
 		recordTracksEvent( 'calypso_jpc_auth_view' );
 
 		const doAutoAuthorize =
 			! this.props.isAlreadyOnSitesList &&
 			! alreadyAuthorized &&
-			( this.props.calypsoStartedConnection || newUserStartedConnection || autoAuthorize );
+			( this.props.calypsoStartedConnection || authApproved || autoAuthorize );
 
 		// isSSO is a separate case from the rest since we have already validated
 		// it in authorize-form.jsx. Therefore, if it's set, just authorize and redirect.
