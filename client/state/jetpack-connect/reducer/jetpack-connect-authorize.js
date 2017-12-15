@@ -84,7 +84,6 @@ export default function jetpackConnectAuthorize( state = {}, action ) {
 				isAuthorizing: true,
 				authorizeSuccess: false,
 				authorizeError: false,
-				autoAuthorize: true,
 			} );
 
 		case JETPACK_CONNECT_CREATE_ACCOUNT_RECEIVE:
@@ -93,14 +92,12 @@ export default function jetpackConnectAuthorize( state = {}, action ) {
 					isAuthorizing: false,
 					authorizeSuccess: false,
 					authorizeError: true,
-					autoAuthorize: false,
 				} );
 			}
 			return Object.assign( {}, state, {
 				isAuthorizing: true,
 				authorizeSuccess: false,
 				authorizeError: false,
-				autoAuthorize: true,
 				userData: action.userData,
 				bearerToken: get( action, [ 'data', 'bearer_token' ] ),
 			} );
