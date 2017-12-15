@@ -4,11 +4,12 @@
  */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { identity, noop } from 'lodash';
+import { identity, noop, get } from 'lodash';
 import moment from 'moment';
 import page from 'page';
 import i18n, { localize } from 'i18n-calypso';
 import Gridicon from 'gridicons';
+import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
@@ -16,11 +17,11 @@ import Gridicon from 'gridicons';
 import Card from 'components/card';
 import Site from 'blocks/site';
 import postUtils from 'lib/posts/utils';
-import siteUtils from 'lib/site/utils';
 import { recordEvent } from 'lib/posts/stats';
 import EditorPublishButton, { getPublishButtonStatus } from 'post-editor/editor-publish-button';
 import Button from 'components/button';
 import QuickSaveButtons from 'post-editor/editor-ground-control/quick-save-buttons';
+import { canCurrentUser } from 'state/selectors';
 
 export class EditorGroundControl extends PureComponent {
 	static propTypes = {
@@ -128,7 +129,8 @@ export class EditorGroundControl extends PureComponent {
 		const primaryButtonState = getPublishButtonStatus(
 				this.props.site,
 				this.props.post,
-				this.props.savedPost
+				this.props.savedPost,
+				this.props.canUserPublishPosts
 			),
 			buttonLabels = {
 				update: i18n.translate( 'To update, check your email and confirm your address.' ),
@@ -157,7 +159,7 @@ export class EditorGroundControl extends PureComponent {
 	}
 
 	canPublishPost() {
-		return siteUtils.userCan( 'publish_posts', this.props.site );
+		return this.props.canUserPublishPosts;
 	}
 
 	toggleAdvancedStatus = () => {
@@ -284,4 +286,12 @@ export class EditorGroundControl extends PureComponent {
 	}
 }
 
-export default localize( EditorGroundControl );
+export default connect( ( state, ownProps ) => {
+	const siteId = get( ownProps, 'site.ID', null );
+
+	const canUserPublishPosts = canCurrentUser( state, siteId, 'publish_posts' );
+
+	return {
+		canUserPublishPosts,
+	};
+} )( localize( EditorGroundControl ) );
